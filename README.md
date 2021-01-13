@@ -6,6 +6,5 @@
 
 ## Additional info
 
-Files storred in `Data/`.
-
-Remove `docker-compose.override` to run in non-debug mode.
+* Files storred in `Data/`.
+* Remove `docker-compose.override` to run in non-debug mode.
