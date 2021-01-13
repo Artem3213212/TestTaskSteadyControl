@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: DockerfileNginx
+    environment:
+     - NGINX_HOST=agstudio.languagerobbers.ru
     ports:
       - "2086:80"
       - "2087:443"

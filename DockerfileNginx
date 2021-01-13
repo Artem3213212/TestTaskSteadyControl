@@ -10,10 +10,11 @@ RUN luarocks install luafilesystem
 ADD Certificates /etc/nginx/Certificates
 ADD cacert.pem /etc/nginx/cacert.pem
 ADD Nginx.conf /etc/nginx/nginx.conf
-ADD OpenRestyModules /SiteModules
-ADD WebData /Site
-ADD src/Server.lua /Server.lua
+ADD OpenRestyModules /Modules
+ADD Data /Data
+ADD Server.lua /Server.lua
 
-WORKDIR /Site
+WORKDIR /Data
 
+#CMD /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && openresty -c /etc/nginx/nginx.conf"
 CMD ["openresty", "-c", "/etc/nginx/nginx.conf"]

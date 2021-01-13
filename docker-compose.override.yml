@@ -1,10 +1,12 @@
 version: "3"
 services:
   nginx:
+    environment:
+     - NGINX_DEBUG=TRUE
     volumes:
       - ./Certificates:/etc/nginx/Certificates
       - ./cacert.pem:/etc/nginx/cacert.pem
       - ./Nginx.conf:/etc/nginx/nginx.conf
-      - ./OpenRestyModules:/SiteModules
-      - ./WebData:/Site
-      - ./src/Server.lua:/Server.lua
+      - ./OpenRestyModules:/Modules
+      - ./Data:/Data
+      - ./Server.lua:/Server.lua

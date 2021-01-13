@@ -1,3 +1,3 @@
 return {
-  WebDataDir="/Site"
+  WebDataDir="/Data"
 }
