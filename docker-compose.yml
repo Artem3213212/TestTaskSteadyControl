@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: DockerfileNginx
+    ports:
+      - "2086:80"
+      - "2087:443"

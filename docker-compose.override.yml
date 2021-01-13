@@ -1,0 +1,10 @@
+version: "3"
+services:
+  nginx:
+    volumes:
+      - ./Certificates:/etc/nginx/Certificates
+      - ./cacert.pem:/etc/nginx/cacert.pem
+      - ./Nginx.conf:/etc/nginx/nginx.conf
+      - ./OpenRestyModules:/SiteModules
+      - ./WebData:/Site
+      - ./src/Server.lua:/Server.lua
