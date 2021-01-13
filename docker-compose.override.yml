@@ -1,8 +1,6 @@
 version: "3"
 services:
   nginx:
-    environment:
-     - NGINX_DEBUG=TRUE
     volumes:
       - ./Certificates:/etc/nginx/Certificates
       - ./cacert.pem:/etc/nginx/cacert.pem

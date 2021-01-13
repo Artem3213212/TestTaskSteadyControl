@@ -69,6 +69,9 @@ local BaseRoutes={
                         "url": "https://agstudio.languagerobbers.ru:2087/v1/admin"
                     }
                 ],
+                "links": {
+                    "self": "https://agstudio.languagerobbers.ru:2087/"
+                },
                 "type": "object-store",
                 "id": "050726f278654128aba89757ae25950c",
                 "name": "keystone"
@@ -199,8 +202,8 @@ local function SearchInRoutes(Routes,URL)
     if Action then
       Action(Route)
     else
-      ngx.print('')
       ngx.status=501
+      ngx.print('')
     end
     ngx.exit(ngx.OK)
   end

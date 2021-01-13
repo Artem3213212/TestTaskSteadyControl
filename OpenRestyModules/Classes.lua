@@ -1,5 +1,6 @@
 local etlua=require('etlua')
 local cjson=require("cjson")
+local inspect=require("inspect")
 
 --functions
 
@@ -65,6 +66,11 @@ function TEntity:HEAD()
   self:OpenHeaders()
   self:InitResponceId()
   self:InitResponceMetadata()
+  ngx.log(ngx.ERR,'\n'..inspect(self,{process=function(item)
+    if type(item)~='string' or #item<256 then
+      return item
+    end
+  end})..'\n')
   ngx.status=200
   ngx.print('')
 end
@@ -115,7 +121,10 @@ function TIterableEntity:CompileData()
       break
     end
   end
-  ngx.print(self.DataCompileres[CTNum](self.Name,Data))
+  local body=self.DataCompileres[CTNum](self.Name,Data)
+  ngx.header['Content-Length']=#body
+  ngx.print(body)
+  ngx.log(ngx.ERR,'\n'..body..'\n')
 end
 
 function TIterableEntity:GET()
@@ -172,20 +181,25 @@ end
 
 --TObject
 function TObject:InitResponceMetadata()
-  ngx.header['Content-Length']=tostring(#self.Data)
   ngx.header['ETag']=self.MD5
   ngx.header['Last-Modified']=ngx.http_time(self.LastModiffiedTimeStamp)
   ngx.header['X-Timestamp']=self.LastModiffiedTimeStamp
   ngx.header['X-Static-Large-Object']='false'
   ngx.header['Content-Type']=self.mimetype
+  ngx.header['Content-Length']=#self.Data
 end
 function TObject:GET()
   self:OpenHeaders()
   if not self.ReqHeaders['Range'] then
     self:InitResponceId()
     self:InitResponceMetadata()
-    ngx.header['Accept-Ranges']=''
+    ngx.header['Accept-Ranges']='bytes'
     ngx.status=200
+    ngx.log(ngx.ERR,'\n'..inspect(self,{process=function(item)
+        if type(item)~='string' or #item<256 then
+          return item
+        end
+      end})..'\n'..#self.Data..'bytes\n')
     ngx.print(self.Data)
   else
     ngx.status=501
